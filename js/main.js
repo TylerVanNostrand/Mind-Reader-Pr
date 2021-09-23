@@ -81,6 +81,32 @@ let thirdArea = document.getElementById("thirdArea");
 let startOver = document.getElementById("startOver");
 
 function next() {
-    iterator++;
-    currentState
+    iterator++;         //increment current state
+    currentState = states[iterator];      //render the display
+    render();
+}
+
+function reset()   {        //set display back to 0
+    init(); 
+}
+
+function render()   {       //take data from current state  and populate the view
+    headingText.innerHTML = currentState.headingText;
+    buttonText.innerHTML = currentState.buttonText;
+    thirdArea.innerHTML = currentState.thirdArea;
+    startOver.innerHTML = currentState.startOver;
+}
+
+console.log(currentState.buttonText.length);        // show or hide button based on str length, if === 0 hide
+if (currentState.buttonText.length === 0 )  {        // else, show button  and  use button text to change the innerHTML
+    button.hidden = true;
+    button.value = currentState.buttonText;
+}  else {
+    button.hidden = false;
+}
+if (currentState.startOver.length === 0 )   {
+    startOver.hidden = true;
+    startOver.value = currentState.startOver;
+}   else {
+    startOver.hidden = false;
 }
