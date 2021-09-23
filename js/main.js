@@ -1,4 +1,8 @@
 
+// setting global default vars and const
+const backGo = document.getElementById("backGo");
+
+const nextReveal = document.getElementById("nextReveal");
 
 function randomizeSymbolString()    {
     // create an empty string for the return
@@ -110,3 +114,6 @@ if (currentState.startOver.length === 0 )   {
 }   else {
     startOver.hidden = false;
 }
+
+
+document.body.onload = init;
