@@ -14,7 +14,7 @@
        *  button2 links to the button2 in html to output the current button2 text.
        *  symbol stores an array of 10 symbols.
        *  yourSymbol stores a symbol that is assigned radomly to a number divisible by 9.
-    Fucntions
+    Functions
         * updatePage function: updates the page with the values of header, helperText, button1, and button2 based on the current value of page.
         * nextPage function: increases the value of page by 1 and then uses the updatePage function.
         * restartPage function: if the value of page is equal to 0, then increases the value of page by 1 and updates the page, else sets the value of page to 0 and then uses the updatePage function.
