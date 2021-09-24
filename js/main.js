@@ -1,119 +1,93 @@
 
-// setting global default vars and const
-const backGo = document.getElementById("backGo");
+// create's the text elements in the HTML to display for each state
+let main = document.getElementById("main").innerHTML
 
-const nextReveal = document.getElementById("nextReveal");
+let smTxt = document.getElementById("smTxt").innerHTML
 
-function randomizeSymbolString()    {
-    // create an empty string for the return
-    let str = "";
-    // add list of symbols
-    let symbols = ["!", "@", "#", "$", "%", "^", "&", "*", ">", "?"];
+// create symbols.
+let symbls = ["!", "@", "#", "$", "%", "^", "&", "*", "+", "?"];
+
+// create states
+let state = 1
+
+// create mind reader
+let answerSym = null
+
+// advanced state(goes to the next view)
+function nextState() {
+    console.log(state)
+    state++
+    renderView()
+}
+// reset to state 1 (Reset button)
+function resetState() {
+    state = 1
+    renderView()
 }
 
-    // pick random symbol to represent multiple of nine
-    let symbol = symbols [0]; 
-    for(let i = 0; i < 99; i++) {   //loop through numbers
-        if(i % 9 === 0) {              // if % of 9 then we get the symbol
-            str += i ' - ' + symbol + ' ';
-        } else {
-            str += i + ' - ' + symbols[Math.floor(Math.random()* 10)];  //otherwise we use something other than the symbol
+// This creates the symbols and then randomizes them
+function randomsym() {
+    var rightAns = symbls[Math.ceil(Math.random() * 10)]
+    var str = "<br>";
+    for (i = 0; i <= 99; i++) {
+        if (i % 9) {
+            var sym = symbls[Math.ceil(Math.random() * 10)]
+
+            str = str + i + "-" + sym + "<br>"
+
         }
-        return str
+
+        else {
+            str = str + i + "-" + rightAns + "<br>"
+            answerSym = rightAns
+        }
     }
-
-    // creates an array with a given length and joins it with the given string to repeat
-function init() {
-    let s = randomizeSymbolString();
-    states[4].headingText = s;
-    iterator = 0;
-    currentState = states[iterator];
-    render()
+    // displays the symbols
+    return str;
 }
 
-    // change view once NEXT button is clicked
-function stateChange()  {
-    document.getElementById("nextReveal").innerHTML = "nextReveal";
+// All the states from 1-6. Each has different elements they use and return to the corresponding view.
+function renderView() {
+    if (state == 1) {
+        document.getElementById("main").innerHTML = "Wanna play a game? I can read your mind!"
+        document.getElementById("smTxt").innerHTML = ""
+        document.getElementById("btn2").style.visibility = "hidden"
+        document.getElementById("btn1").style.visibility = "initial"
+    }
+    else if (state == 2) {
+        document.getElementById("main").innerHTML = "Pick a number between 1 and 99"
+        document.getElementById("smTxt").innerHTML = "When you've picked your number, click next"
+        document.getElementById("btn2").style.visibility = "initial"
+        document.getElementById("btn1").style.visibility = "initial"
+
+    }
+    else if (state == 3) {
+        document.getElementById("main").innerHTML = "Add both digits together to get a new number"
+        document.getElementById("smTxt").innerHTML = "Ex: 14 is 1 + 4 = 5 Click next to proceed"
+        document.getElementById("btn2").style.visibility = "initial"
+        document.getElementById("btn1").style.visibility = "initial"
+    }
+    else if (state == 4) {
+        document.getElementById("main").innerHTML = "Subtract your new number from the original number"
+        document.getElementById("smTxt").innerHTML = "Ex: 14 - 5 = 9 This is your new number Click next to proceed "
+        document.getElementById("btn2").style.visibility = "initial"
+        document.getElementById("btn1").style.visibility = "initial"
+    }
+    else if (state == 5) {
+        // call function to create symbols
+        var str = randomsym()
+        document.getElementById("main").innerHTML = str;
+        document.getElementById("smTxt").innerHTML = "Scroll down to find your new number. Remember the symbol next to the number"
+        document.getElementById("btn2").style.visibility = "initial"
+        document.getElementById("btn1").style.visibility = "initial"
+    }
+    else if (state == 6) {
+
+        document.getElementById("main").innerHTML = answerSym
+        document.getElementById("smTxt").innerHTML = "Your symbol is: <br>" + answerSym
+        document.getElementById("btn2").style.visibility = "initial"
+        document.getElementById("btn1").style.visibility = "hidden"
+    }
 }
 
-    // create the state array that will hold the different views
-    let states = [
-        {
-            headingText: "I can read your mind.",
-            buttonText:  "GO",
-            thirdArea: "",
-            startOver: ""
-        },
-        {
-            headingText: "Pick a number between 01 - 99",
-            buttonText: "NEXT",
-            thirdArea: "When you have your number click next",
-            startOver: "START OVER"
-        },
-        {
-            headingText: "Add both digits together to get a new number",
-            buttonText: "NEXT",
-            thirdArea: "Ex: 14 is 1 + 4 = 5",
-            startOver: "START OVER"
-        },
-        {
-            headingText: "Subtract your new number from the original number",
-            buttonText: "NEXT",
-            thirdArea: "Ex: 14 - 5 = 9",
-            startOver: "START OVER"
-        },
-        {
-            headingText: null,
-            buttonText: "REVEAL",
-            thirdArea: "Find your new number. Note the symbol beside the number",
-            startOver: "START OVER"
-        },
-        {
-            headingText: null,
-            buttonText: "",
-            thirdArea: "",
-            startOver: "START OVER"
-        },
-    ];
-    
-let currentState = null;
-let iterator = 0;
-
-let headingText = document.getElementById("headingText");
-let buttonText = document.getElementById("nextReveal");
-let thirdArea = document.getElementById("thirdArea");
-let startOver = document.getElementById("startOver");
-
-function next() {
-    iterator++;         //increment current state
-    currentState = states[iterator];      //render the display
-    render();
-}
-
-function reset()   {        //set display back to 0
-    init(); 
-}
-
-function render()   {       //take data from current state  and populate the view
-    headingText.innerHTML = currentState.headingText;
-    buttonText.innerHTML = currentState.buttonText;
-    thirdArea.innerHTML = currentState.thirdArea;
-    startOver.innerHTML = currentState.startOver;
-}
-
-console.log(currentState.buttonText.length);        // show or hide button based on str length, if === 0 hide
-if (currentState.buttonText.length === 0 )  {        // else, show button  and  use button text to change the innerHTML
-    button.hidden = true;
-    button.value = currentState.buttonText;
-}  else {
-    button.hidden = false;
-}
-if (currentState.startOver.length === 0 )   {
-    startOver.hidden = true;
-    startOver.value = currentState.startOver;
-}   else {
-    startOver.hidden = false;
-}
-
-
-document.body.onload = init;
+renderView()
