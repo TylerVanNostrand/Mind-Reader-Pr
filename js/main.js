@@ -17,12 +17,12 @@ let answerSym = null
 function nextState() {
     console.log(state)
     state++
-    renderView()
+    changePage()
 }
 // reset to state 1 (Reset button)
 function resetState() {
     state = 1
-    renderView()
+    changePage()
 }
 
 // This creates the symbols and then randomizes them
@@ -47,7 +47,7 @@ function randomsym() {
 }
 
 // All the states from 1-6. Each has different elements they use and return to the corresponding view.
-function renderView() {
+function changePage() {
     if (state == 1) {
         document.getElementById("main").innerHTML = "Wanna play a game? I can read your mind!"
         document.getElementById("smTxt").innerHTML = ""
@@ -90,4 +90,4 @@ function renderView() {
     }
 }
 
-renderView()
+changePage()
